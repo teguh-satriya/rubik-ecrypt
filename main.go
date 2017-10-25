@@ -32,7 +32,7 @@ func init() {
 }
 
 func main() {
-	imgfile, err := os.Open("tes2.jpg")
+	imgfile, err := os.Open("tes.jpg")
 
 	if err != nil {
 		fmt.Println("img.jpg file not found!")
