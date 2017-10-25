@@ -32,7 +32,7 @@ func init() {
 }
 
 func main() {
-	imgfile, err := os.Open("tes.jpg")
+	imgfile, err := os.Open("tes.jpeg")
 
 	if err != nil {
 		fmt.Println("img.jpg file not found!")
@@ -69,20 +69,20 @@ func main() {
 		}
 	}
 
-	var iterasi = 250
+	var iterasi = 100
 	BlockAct := []Block{}
 	BlockEnc := []Block{}
 	for y := 0; y < 1000; y += iterasi {
 		yArr := ActImg[y : y+iterasi]
 		for x := 0; x < 1000; x += iterasi {
 			var arrPos = []Warna{}
-			for z := 0; z < 250; z++ {
+			for z := 0; z < iterasi; z++ {
 				arr := yArr[z][x : x+iterasi]
 				arrPos = append(arrPos, arr...)
 			}
 
 			BlockAct = append(BlockAct, Block{x, y, arrPos})
-			BlockEnc = append(BlockEnc, Block{x, y, RotateClockWise(arrPos, 500)})
+
 		}
 	}
 	actual := image.NewRGBA(image.Rect(0, 0, 1000, 1000))
@@ -99,6 +99,8 @@ func main() {
 			actual.Set(Koord[k].X, Koord[k].Y, color.RGBA{
 				uint8(c.R >> 8), uint8(c.G >> 8), uint8(c.B >> 8), uint8(c.A >> 8)})
 		}
+
+		BlockEnc = append(BlockEnc, Block{b.X, b.Y, RotateClockWise(b.Col, iterasi*2)})
 	}
 
 	for _, b := range BlockEnc {
